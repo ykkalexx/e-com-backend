@@ -1,8 +1,10 @@
+APP_NAME = e-com-backend
+
 build:
-	@go build -o bin/$(APP_NAME) cmd/main.go
+	@go build -o .\bin\$(APP_NAME).exe .\cmd\main.go
 
 test:
-	@go test -v ./...
+	@go test -v .\...
 
 run: build
-	@./bin/$(APP_NAME)
+	@.\bin\$(APP_NAME).exe
