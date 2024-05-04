@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/ykkalexx/e-com-backend/service/user"
 )
 
 type APIServer struct {
@@ -23,10 +24,17 @@ func NewAPIServer(addr string, db *sql.DB) *APIServer {
 
 // Run starts the API server
 func (s *APIServer) Run() error {
+	// Create a new router
 	router := mux.NewRouter()
 	subrouter := router.PathPrefix("/api/v1").Subrouter()
 
+	// Register the routes for the user service
+	userService := user.NewHandler()
+	userService.RegisterRoutes(subrouter)
+
+	// Start the server
 	log.Println("Starting server on", s.addr)
-	
+
+	// Listen and serve
 	return http.ListenAndServe(s.addr, router)
 }
